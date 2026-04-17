@@ -70,7 +70,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
           </button>
 
           {/* Interactive Margin Calculator */}
-          <div className="bg-gray-50 border border-gray-200 p-6 md:p-8 rounded-sm">
+          <div className="bg-gray-50 border border-gray-200 p-4 md:p-8 rounded-sm">
             <h3 className="font-playfair text-xl font-semibold mb-2">Interactive Margin Calculator</h3>
             <p className="text-xs text-gray-500 mb-6">See exactly how our transparent pricing works against the average Jakarta market price.</p>
 

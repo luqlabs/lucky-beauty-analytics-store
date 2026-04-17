@@ -28,54 +28,12 @@ export default function CheckoutPage() {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!session) return;
     setLoading(true);
 
-    const supabase = createClient();
-
     try {
-      // 1. Create order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          user_id: session.user.id,
-          total_idr: totalPriceIdr,
-          shipping_address: address,
-          status: 'processing'
-        })
-        .select()
-        .single();
-
-      if (orderError) throw orderError;
-
-      // 2. Transcribe items to order_items
-      const orderItemsToInsert = items.map(item => ({
-        order_id: order.id,
-        product_id: item.product.id,
-        quantity: item.quantity,
-        price_at_purchase_idr: item.product.our_price_idr
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItemsToInsert);
-
-      if (itemsError) throw itemsError;
-
-      // 3. Clear cart in DB (assuming CartContext syncs to DB, or we can just empty it)
-      // Since CartContext should pull from DB, wiping the cart items manually here:
-      const { data: cartObj } = await supabase.from('carts').select('id').eq('user_id', session.user.id).single();
-      if (cartObj) {
-        await supabase.from('cart_items').delete().eq('cart_id', cartObj.id);
-      }
-
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 1500));
       setOrdered(true);
-      
-      // Optionally reload the window after 2 seconds to reset CartContext easily
-      setTimeout(() => {
-        window.location.href = '/account';
-      }, 2000);
-
     } catch (err: any) {
       console.error(err);
       alert('Failed to place order: ' + err.message);
@@ -89,8 +47,7 @@ export default function CheckoutPage() {
       <div className="container mx-auto px-4 py-24 flex flex-col items-center justify-center grow">
         <CheckCircle className="w-16 h-16 text-green-500 mb-6" />
         <h1 className="font-playfair text-4xl font-semibold mb-2">Order Confirmed</h1>
-        <p className="text-gray-600 mb-8 text-center max-w-md">Thank you for shopping with LUCKY. Your order has been placed successfully and is now processing.</p>
-        <p className="text-xs text-gray-400">Redirecting to your account...</p>
+        <p className="text-gray-600 mb-8 text-center max-w-md">✨ Order Simulation Complete. Ready for Shopify Gateway Integration.</p>
       </div>
     );
   }

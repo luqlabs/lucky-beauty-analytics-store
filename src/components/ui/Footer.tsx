@@ -29,9 +29,9 @@ export const Footer = () => {
             <h3 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-4">About</h3>
             <ul className="space-y-3">
               <li><Link href="/story" className="text-sm text-gray-600 hover:text-black transition-colors">Our Story</Link></li>
-              <li><Link href="/ingredients" className="text-sm text-gray-600 hover:text-black transition-colors">Ingredients Glossary</Link></li>
-              <li><Link href="/sustainability" className="text-sm text-gray-600 hover:text-black transition-colors">Sustainability</Link></li>
-              <li><Link href="/contact" className="text-sm text-gray-600 hover:text-black transition-colors">Contact Us</Link></li>
+              <li><a href="#" onClick={() => alert('Page content coming soon!')} className="text-sm text-gray-600 hover:text-black transition-colors">Ingredients Glossary</a></li>
+              <li><a href="#" onClick={() => alert('Page content coming soon!')} className="text-sm text-gray-600 hover:text-black transition-colors">Sustainability</a></li>
+              <li><a href="#" onClick={() => alert('Page content coming soon!')} className="text-sm text-gray-600 hover:text-black transition-colors">Contact Us</a></li>
             </ul>
           </div>
           

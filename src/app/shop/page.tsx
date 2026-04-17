@@ -1,8 +1,17 @@
+"use client";
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { products } from '@/lib/mockData';
 
 export default function ShopPage() {
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filteredProducts = activeCategory === 'All' 
+    ? products 
+    : products.filter(p => p.category === activeCategory);
+
   const formatIdr = (val: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -25,17 +34,26 @@ export default function ShopPage() {
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest border-b border-gray-200 pb-2 mb-4">Category</h3>
             <ul className="space-y-3">
-              <li><label className="flex items-center gap-2 text-sm text-gray-600"><input type="checkbox" className="accent-black" /> All</label></li>
-              <li><label className="flex items-center gap-2 text-sm text-gray-600"><input type="checkbox" className="accent-black" /> Best Selling</label></li>
-              <li><label className="flex items-center gap-2 text-sm text-gray-600"><input type="checkbox" className="accent-black" /> Trending</label></li>
-              <li><label className="flex items-center gap-2 text-sm text-gray-600"><input type="checkbox" className="accent-black" /> New Arrivals</label></li>
+              {['All', 'Best Selling', 'Trending', 'New'].map(cat => (
+                <li key={cat}>
+                  <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      className="accent-black" 
+                      checked={activeCategory === cat}
+                      onChange={() => setActiveCategory(cat)}
+                    /> 
+                    {cat}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         {/* Product Grid */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Link 
               href={`/product/${product.id}`} 
               key={product.id}
